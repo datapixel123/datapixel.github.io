@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Conversion Rate Optimization Calculator</title>
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+	<!-- Material Design Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Material Design Styles -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		.card {
+		  margin-top: 20px;
+		}
+		.card-title {
+		  margin-bottom: 0;
+		}
+		.card-panel {
+		  margin-top: 20px;
+		  margin-bottom: 0;
+		}
+		.powered-by {
+		  margin-top: 20px;
+		  text-align: center;
+		}
+		.powered-by a {
+		  color: #333;
+		}
+		.powered-by a:hover {
+		  color: #666;
+		}
+		.range-field {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col s12 m8 offset-m2">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Conversion Rate Optimization Calculator</span>
+						<form id="calculator-form">
+							<div class="row">
+								<div class="input-field col s12">
+									<p class="range-field">
+										<input type="range" id="conversion-rate" min="0" max="100" />
+										<label for="conversion-rate">Current Conversion Rate (%)</label>
+									</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="monthly-sessions" type="number" min="0" required>
+									<label for="monthly-sessions">Average Monthly Sessions</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="average-order-value" type="number" min="0" required>
+									<label for="average-order-value">Average Order Value (AOV) $</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<button class="btn waves-effect waves-light" type="submit" name="action">Calculate
+										<i class="material-icons right">send</i>
+									</button>
+								</div>
+							</div>
+						</form>
+						<div class="row">
+							<div class="col s12">
+								<div class="card-panel teal">
+									<span class="white-text">Total Sales Value: <span id="result"></span></span>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12">
+								<div class="powered-by">
+									Powered by <a href="https://www.datapixel.club/" target="_blank" rel="dofollow">Data Pixel</a>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Materialize JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Initialize Materialize components
+		M.AutoInit();
+		// Calculate button event listener
+		const calculateBtn = document.querySelector('#calculator-form button');
+		const resultDiv = document.querySelector('#result');
+		calculateBtn.addEventListener('click', function(event) {
+			event.preventDefault();
+			const conversionRate = document.querySelector('#conversion-rate').value;
+			const monthlySessions = document.querySelector('#monthly-sessions').value;
+			const averageOrderValue = document.querySelector('#average-order-value').value;
+			const value = conversionRate / 100 * monthlySessions * averageOrderValue;
+			resultDiv.textContent = '$' + value.toFixed(2);
+		});
+	});
+	</script>
+</body>
+</html>
