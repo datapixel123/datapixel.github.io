@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversion Rate Optimization Calculator</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Material Design Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .card {
+            margin-top: 20px;
+        }
+        .card-title {
+            margin-bottom: 0;
+        }
+        .card-panel {
+            margin-top: 20px;
+            margin-bottom: 0;
+        }
+	  .switch label {
+        padding-top: 20px; /* Adjust as needed */
+    }
+    .switch label .lever {
+        margin-top: -15px !important; /* Adjust as needed */
+    }
+    .switch label .lever:after {
+        top: calc(50% - 10px) !important; /* Adjust as needed */
+    }
+
+
+        .powered-by {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .powered-by a {
+            color: #333;
+        }
+        .powered-by a:hover {
+            color: #666;
+        }
+        .range-field {
+            width: 100%;
+        }
+	  .input-field > label {
+            margin-bottom: 20px;  /* Add space below the label */
+        }
+.input-field > p {
+            padding-top: 20px;
+input[type="radio"] {
+            vertical-align: middle; /* Adjust this value as needed */
+        }
+
+   .switch-label {
+            position: relative;
+            padding-left: 3em; /* Adjust as needed */
+        }
+        .switch-label input[type="radio"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+.switch-container {
+            margin-top: 1.5em; /* Adjust as needed */
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Conversion Rate Optimization Calculator</span>
+                        <form id="calculator-form">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <label>Conversion Rate Range:</label>
+                                    <div class="switch">
+                                        <label>
+                                            0% - 10%
+                                            <input name="conversion-rate-range" type="checkbox">
+                                            <span class="lever"></span>
+                                            0% - 100%
+                                        </label>
+                                    </div>
+                                    <p class="range-field">
+                                        <input type="range" id="conversion-rate" min="0" max="100" />
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="monthly-sessions" type="number" min="0" required>
+                                    <label for="monthly-sessions">Average Monthly Sessions</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="average-order-value" type="number" min="0" required>
+                                    <label for="average-order-value">Average Order Value (AOV) $</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel teal">
+                                    <span class="white-text">Total Sales Value: <span id="result"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="powered-by">
+                                    Powered by <a href="https://www.datapixel.club/" target="_blank" rel="dofollow">Data Pixel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Materialize components
+    M.AutoInit();
+    // Define variables
+    const conversionRateSlider = document.querySelector('#conversion-rate');
+    const monthlySessionsInput = document.querySelector('#monthly-sessions');
+    const averageOrderValueInput = document.querySelector('#average-order-value');
+    const resultDiv = document.querySelector('#result');
+    const conversionRateRangeSwitch = document.querySelector('input[name="conversion-rate-range"]');
+
+    // Function to calculate and display result
+    function calculate() {
+        const conversionRate = conversionRateSlider.value;
+        const monthlySessions = monthlySessionsInput.value;
+        const averageOrderValue = averageOrderValueInput.value;
+        const value = conversionRate / 100 * monthlySessions * averageOrderValue;
+        resultDiv.textContent = '$' + value.toFixed(2);
+    }
+
+    // Function to update slider attributes based on selected range
+    function updateSlider() {
+        conversionRateSlider.max = this.checked ? '100' : '10';
+        conversionRateSlider.step = this.checked ? '1' : '0.1';
+        calculate();
+    }
+
+    // Event listeners
+    conversionRateSlider.addEventListener('input', calculate);
+    monthlySessionsInput.addEventListener('input', calculate);
+    averageOrderValueInput.addEventListener('input', calculate);
+    conversionRateRangeSwitch.addEventListener('change', updateSlider);
+
+    // Initial calculation
+    calculate();
+});
+</script>
+</body>
+</html>
